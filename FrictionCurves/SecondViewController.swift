@@ -25,7 +25,7 @@ class SecondViewController: UIViewController {
         
         if (hasExceededVerticalLimit(topViewConstraint.constant)){
             totalTranslation += yTranslation
-            topViewConstraint.constant = logConstraintValueForYPoisition(totalTranslation)
+            topViewConstraint.constant = logConstraintValueForYPosition(totalTranslation)
             if(sender.state == UIGestureRecognizerState.Ended ){
                 animateViewBackToLimit()
             }
@@ -39,7 +39,7 @@ class SecondViewController: UIViewController {
     func hasExceededVerticalLimit(yPosition : CGFloat) -> Bool {
         return yPosition < verticalLimit
     }
-    func logConstraintValueForYPoisition(yPosition : CGFloat) -> CGFloat {
+    func logConstraintValueForYPosition(yPosition : CGFloat) -> CGFloat {
         return verticalLimit * (1 + log10(yPosition/verticalLimit))
     }
     func animateViewBackToLimit() {
