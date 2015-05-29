@@ -10,7 +10,6 @@ import UIKit
 
 class SecondViewController: UIViewController {
 
-
     @IBOutlet weak var topViewConstraint: NSLayoutConstraint!
     let verticalLimit : CGFloat = -200
     var totalTranslation : CGFloat = -200
@@ -23,7 +22,7 @@ class SecondViewController: UIViewController {
     @IBAction func viewDragged(sender: UIPanGestureRecognizer) {
         let yTranslation = sender.translationInView(view).y
         
-        if (hasExceededVerticalLimit(topViewConstraint.constant)){
+        if (topViewConstraint.hasExceeded(verticalLimit)){
             totalTranslation += yTranslation
             topViewConstraint.constant = logConstraintValueForYPosition(totalTranslation)
             if(sender.state == UIGestureRecognizerState.Ended ){
@@ -34,11 +33,7 @@ class SecondViewController: UIViewController {
         }
         sender.setTranslation(CGPointZero, inView: view)
     }
-
     
-    func hasExceededVerticalLimit(yPosition : CGFloat) -> Bool {
-        return yPosition < verticalLimit
-    }
     func logConstraintValueForYPosition(yPosition : CGFloat) -> CGFloat {
         return verticalLimit * (1 + log10(yPosition/verticalLimit))
     }
@@ -52,3 +47,8 @@ class SecondViewController: UIViewController {
     }
 }
 
+private extension NSLayoutConstraint {
+    func hasExceeded(verticalLimit: CGFloat) -> Bool {
+        return self.constant < verticalLimit
+    }
+}
