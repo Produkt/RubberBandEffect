@@ -26,12 +26,12 @@ class FirstViewController: UIViewController {
     }
     @IBAction func viewDragged(sender: UIPanGestureRecognizer) {
         let xPosition = sender.locationInView(view).x
-        movingViewLeadingConstraint.constant = linearConstraintValueForXPoisition(xPosition)
+        movingViewLeadingConstraint.constant = linearConstraintValueForXPosition(xPosition)
         
         if (hasExceededVerticalLine(xPosition)) {
-            topViewLeadingConstraint.constant = sqrtConstraintValueForXPoisition(xPosition)
-            middleViewLeadingConstraint.constant = lognConstraintValueForXPoisition(xPosition)
-            bottomLeadingConstraint.constant = powConstraintValueForXPoisition(xPosition)
+            topViewLeadingConstraint.constant = sqrtConstraintValueForXPosition(xPosition)
+            middleViewLeadingConstraint.constant = lognConstraintValueForXPosition(xPosition)
+            bottomLeadingConstraint.constant = powConstraintValueForXPosition(xPosition)
             
             if(sender.state == UIGestureRecognizerState.Ended ){
                 movingViewLeadingConstraint.constant = finalConstraintValue()
@@ -40,28 +40,28 @@ class FirstViewController: UIViewController {
                 bottomLeadingConstraint.constant = finalConstraintValue()
             }
         } else {
-            topViewLeadingConstraint.constant = linearConstraintValueForXPoisition(xPosition)
-            middleViewLeadingConstraint.constant = linearConstraintValueForXPoisition(xPosition)
-            bottomLeadingConstraint.constant = linearConstraintValueForXPoisition(xPosition)
+            topViewLeadingConstraint.constant = linearConstraintValueForXPosition(xPosition)
+            middleViewLeadingConstraint.constant = linearConstraintValueForXPosition(xPosition)
+            bottomLeadingConstraint.constant = linearConstraintValueForXPosition(xPosition)
         }
 
     }
 
 
-    func linearConstraintValueForXPoisition(xPosition : CGFloat) -> CGFloat {
+    func linearConstraintValueForXPosition(xPosition : CGFloat) -> CGFloat {
         return xPosition - CGRectGetWidth(movingView.frame)/2
     }
-    func sqrtConstraintValueForXPoisition(xPosition : CGFloat) -> CGFloat {
-        let linearValue = linearConstraintValueForXPoisition(xPosition)
+    func sqrtConstraintValueForXPosition(xPosition : CGFloat) -> CGFloat {
+        let linearValue = linearConstraintValueForXPosition(xPosition)
         return finalConstraintValue() + sqrt(linearValue - finalConstraintValue())
     }
-    func powConstraintValueForXPoisition(xPosition : CGFloat) -> CGFloat {
-        let linearValue = linearConstraintValueForXPoisition(xPosition)
+    func powConstraintValueForXPosition(xPosition : CGFloat) -> CGFloat {
+        let linearValue = linearConstraintValueForXPosition(xPosition)
         let powValue = pow(linearValue/finalConstraintValue(), 4.0)
         return linearValue - powValue
     }
-    func lognConstraintValueForXPoisition(xPosition : CGFloat) -> CGFloat {
-        let linearValue = linearConstraintValueForXPoisition(xPosition)
+    func lognConstraintValueForXPosition(xPosition : CGFloat) -> CGFloat {
+        let linearValue = linearConstraintValueForXPosition(xPosition)
         return finalConstraintValue() * (1 + log10(linearValue/finalConstraintValue()))
     }
     
